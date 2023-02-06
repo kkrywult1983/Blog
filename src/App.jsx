@@ -1,11 +1,5 @@
-import { useState } from "react";
-import "./App.css";
-import PostsList from "./pages/PostsList.jsx";
+import { PostsList } from "./pages";
 
-function App() {
-  const [count, setCount] = useState(0);
-
-  return <PostsList />;
-}
+const App = () => <PostsList />;
 
 export default App;
