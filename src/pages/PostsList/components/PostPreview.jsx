@@ -5,7 +5,6 @@ import React from "react";
 const PostPreview = (props) => {
   const postsDatas = props.posts.map((postData) => {
     return {
-      length: 23,
       title: postData.title,
       avatar: "https://xsgames.co/randomusers/avatar.php?g=male",
       content: postData.body,
@@ -42,14 +41,13 @@ const PostPreview = (props) => {
         >
           <List.Item.Meta
             avatar={<Avatar src={item.avatar} />}
-            title={<a href={item.href}>{item.title}</a>}
+            title={item.title}
           />
-          {item.content}
+          <div className="contentdiv">{item.content}</div>
         </List.Item>
       )}
     />
   );
 };
-// Zwrócić tytuł, ilość like, wzrócić 2 linijni tesktu, dodać buton "read more"
 
 export default PostPreview;
