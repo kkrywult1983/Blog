@@ -18,19 +18,10 @@ const PostsList = () => {
   }, []);
 
   return (
-    <div>
-      {loading ? (
-        <Spin />
-      ) : (
-        <div>
-          {/* {posts.map(({ id, title }) => (
-            <div key={id}>{title}</div>
-          ))} */}
-        </div>
-      )}
-      <div className="title">Blogasek</div>
+    <div className="title">
+      {loading ? <Spin /> : "BLOGASEK"}
       <div>
-        <PostPreview key={posts.id} posts={posts} />{" "}
+        <PostPreview posts={posts} />
       </div>
     </div>
   );
