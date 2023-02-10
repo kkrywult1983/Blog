@@ -7,6 +7,7 @@ const PostPreview = (props) => {
     return {
       title: postData.title,
       avatar: "https://xsgames.co/randomusers/avatar.php?g=male",
+      shortContent: postData.body.match(/^[^.]+\.[^.]+\.[^.]+\.[^.]+\./),
       content: postData.body,
       likesCount: postData.likesCount,
     };
@@ -25,7 +26,7 @@ const PostPreview = (props) => {
       itemLayout="vertical"
       size="large"
       pagination={{
-        pageSize: 2,
+        pageSize: 4,
       }}
       dataSource={postsDatas}
       renderItem={(item) => (
@@ -43,7 +44,7 @@ const PostPreview = (props) => {
             avatar={<Avatar src={item.avatar} />}
             title={item.title}
           />
-          <div className="contentdiv">{item.content}</div>
+          <div className="contentdiv">{item.shortContent}</div>
         </List.Item>
       )}
     />
