@@ -13,7 +13,6 @@ const IconText = ({ icon, text }) => (
 const PostPreview = (props) => {
   const postsDatas = props.posts.map((postData) => {
     return {
-      length: 23,
       title: postData.title,
       avatar: "https://xsgames.co/randomusers/avatar.php?g=male",
       content: postData.body,
@@ -49,11 +48,7 @@ const PostPreview = (props) => {
             ellipsis={{
               rows: 3,
               expandable: true,
-              symbol: (
-                <Space>
-                  <Button>Read more...</Button>
-                </Space>
-              ),
+              symbol: <Button>Read more...</Button>,
               suffix: `${item.title}`,
             }}
           >
