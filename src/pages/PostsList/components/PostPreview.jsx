@@ -48,7 +48,11 @@ const PostPreview = (props) => {
             ellipsis={{
               rows: 3,
               expandable: true,
-              symbol: <Button>Read more...</Button>,
+              symbol: (
+                <div>
+                  <Button>Read more...</Button>
+                </div>
+              ),
               suffix: `${item.title}`,
             }}
           >
