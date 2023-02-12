@@ -18,11 +18,17 @@ const PostsList = () => {
   }, []);
 
   return (
-    <div className="title">
-      {loading ? <Spin /> : "BLOGASEK"}
-      <div>
-        <PostPreview posts={posts} />
-      </div>
+    <div>
+      {loading ? (
+        <Spin />
+      ) : (
+        <div>
+          <div className="title">Blogasek</div>
+          <div>
+            <PostPreview posts={posts} />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

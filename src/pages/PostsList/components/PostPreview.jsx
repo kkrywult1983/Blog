@@ -1,32 +1,32 @@
-import { Avatar, List, Space, Button } from "antd";
+import { Avatar, List, Space, Button, Typography } from "antd";
 import { LikeOutlined } from "@ant-design/icons";
 import React from "react";
+const { Paragraph } = Typography;
+
+const IconText = ({ icon, text }) => (
+  <Space>
+    {React.createElement(icon)}
+    {text}
+  </Space>
+);
 
 const PostPreview = (props) => {
   const postsDatas = props.posts.map((postData) => {
     return {
+      length: 23,
       title: postData.title,
       avatar: "https://xsgames.co/randomusers/avatar.php?g=male",
-      shortContent: postData.body.match(/^[^.]+\.[^.]+\.[^.]+\.[^.]+\./),
       content: postData.body,
       likesCount: postData.likesCount,
     };
   });
-
-  const IconText = ({ icon, text }) => (
-    <Space>
-      {React.createElement(icon)}
-      {text}
-      <Button>Click to read more...</Button>
-    </Space>
-  );
 
   return (
     <List
       itemLayout="vertical"
       size="large"
       pagination={{
-        pageSize: 4,
+        pageSize: 5,
       }}
       dataSource={postsDatas}
       renderItem={(item) => (
@@ -42,9 +42,23 @@ const PostPreview = (props) => {
         >
           <List.Item.Meta
             avatar={<Avatar src={item.avatar} />}
-            title={item.title}
+            title={<a href={item.href}>{item.title}</a>}
           />
-          <div className="contentdiv">{item.shortContent}</div>
+          <Paragraph
+            style={{ width: "100%" }}
+            ellipsis={{
+              rows: 3,
+              expandable: true,
+              symbol: (
+                <Space>
+                  <Button>Read more...</Button>
+                </Space>
+              ),
+              suffix: `${item.title}`,
+            }}
+          >
+            {item.content}
+          </Paragraph>
         </List.Item>
       )}
     />
