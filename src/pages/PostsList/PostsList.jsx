@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Spin } from "antd";
 import { PostPreview } from "./components";
-import "./PostsList.css";
 
 const PostsList = () => {
   const [posts, setPosts] = useState([]);
@@ -23,7 +22,7 @@ const PostsList = () => {
         <Spin />
       ) : (
         <div>
-          <div className="title">Blogasek</div>
+          <div>Blogasek</div>
           <div>
             <PostPreview posts={posts} />
           </div>

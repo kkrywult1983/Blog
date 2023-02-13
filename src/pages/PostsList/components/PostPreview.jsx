@@ -1,4 +1,4 @@
-import { Avatar, List, Space, Button, Typography } from "antd";
+import { List, Space, Button, Typography } from "antd";
 import { LikeOutlined } from "@ant-design/icons";
 import React from "react";
 const { Paragraph } = Typography;
@@ -7,6 +7,7 @@ const IconText = ({ icon, text }) => (
   <Space>
     {React.createElement(icon)}
     {text}
+    <Button>Read more</Button>
   </Space>
 );
 
@@ -14,7 +15,6 @@ const PostPreview = (props) => {
   const postsDatas = props.posts.map((postData) => {
     return {
       title: postData.title,
-      avatar: "https://xsgames.co/randomusers/avatar.php?g=male",
       content: postData.body,
       likesCount: postData.likesCount,
     };
@@ -39,20 +39,13 @@ const PostPreview = (props) => {
             />,
           ]}
         >
-          <List.Item.Meta
-            avatar={<Avatar src={item.avatar} />}
-            title={<a href={item.href}>{item.title}</a>}
-          />
+          <List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
           <Paragraph
             style={{ width: "100%" }}
             ellipsis={{
-              rows: 3,
-              expandable: true,
-              symbol: (
-                <div>
-                  <Button>Read more...</Button>
-                </div>
-              ),
+              rows: 2,
+              expandable: false,
+
               suffix: `${item.title}`,
             }}
           >
