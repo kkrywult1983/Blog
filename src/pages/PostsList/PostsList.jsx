@@ -1,35 +1,36 @@
-import { useEffect, useState } from "react";
-import { Spin } from "antd";
-import { PostPreview } from "./components";
+import { List } from 'antd'
+import { useEffect, useState } from 'react'
+
+import { Loading } from '../../components'
+import { PostPreview } from './components'
 
 const PostsList = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState([false]);
+  const [posts, setPosts] = useState([])
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    setLoading(true);
-    fetch("http://localhost:3000/posts")
+    setLoading(true)
+    fetch('http://localhost:3000/posts')
       .then((response) => response.json())
       .then((data) => {
-        setPosts(data);
+        setPosts(data)
       })
-      .finally(() => setLoading(false));
-  }, []);
+      .finally(() => setLoading(false))
+  }, [])
 
   return (
-    <div>
-      {loading ? (
-        <Spin />
-      ) : (
-        <div>
-          <div>Blogasek</div>
-          <div>
-            <PostPreview posts={posts} />
-          </div>
-        </div>
+    <>
+      {loading && <Loading />}
+      {!loading && (
+        <List
+          itemLayout="vertical"
+          size="large"
+          dataSource={posts}
+          renderItem={(post) => <PostPreview post={post} />}
+        />
       )}
-    </div>
-  );
-};
+    </>
+  )
+}
 
-export default PostsList;
+export default PostsList

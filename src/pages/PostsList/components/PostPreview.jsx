@@ -1,60 +1,47 @@
-import { List, Space, Button, Typography } from "antd";
-import { LikeOutlined } from "@ant-design/icons";
-import React from "react";
-const { Paragraph } = Typography;
+import { LikeOutlined } from '@ant-design/icons'
+import { Button, List, Typography } from 'antd'
+import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
 
-const IconText = ({ icon, text }) => (
-  <Space>
-    {React.createElement(icon)}
-    {text}
-    <Button>Read more</Button>
-  </Space>
-);
+import IconText from './IconText'
 
-const PostPreview = (props) => {
-  const postsDatas = props.posts.map((postData) => {
-    return {
-      title: postData.title,
-      content: postData.body,
-      likesCount: postData.likesCount,
-    };
-  });
+const { Paragraph } = Typography
+
+const ExtraContentWrapper = styled.div`
+  display: flex;
+  align-items: end;
+  height: 100%;
+`
+
+const PostPreview = ({ post }) => {
+  const navigate = useNavigate()
+
+  const handleNavigate = (postId) => navigate(`/posts/${postId}`)
 
   return (
-    <List
-      itemLayout="vertical"
-      size="large"
-      pagination={{
-        pageSize: 5,
-      }}
-      dataSource={postsDatas}
-      renderItem={(item) => (
-        <List.Item
-          key={item.title}
-          actions={[
-            <IconText
-              icon={LikeOutlined}
-              text={item.likesCount}
-              key="list-vertical-like-o"
-            />,
-          ]}
-        >
-          <List.Item.Meta title={<a href={item.href}>{item.title}</a>} />
-          <Paragraph
-            style={{ width: "100%" }}
-            ellipsis={{
-              rows: 2,
-              expandable: false,
+    <List.Item
+      key={post.title}
+      actions={[
+        <IconText
+          icon={LikeOutlined}
+          text={post.likesCount}
+          key="list-vertical-like-o"
+        />,
+      ]}
+      extra={
+        <ExtraContentWrapper>
+          <Button type="primary" onClick={() => handleNavigate(post.id)}>
+            Read more
+          </Button>
+        </ExtraContentWrapper>
+      }
+    >
+      <List.Item.Meta title={post.title} />
+      <Paragraph ellipsis={{ rows: 2, expandable: false }}>
+        {post.body}
+      </Paragraph>
+    </List.Item>
+  )
+}
 
-              suffix: `${item.title}`,
-            }}
-          >
-            {item.content}
-          </Paragraph>
-        </List.Item>
-      )}
-    />
-  );
-};
-
-export default PostPreview;
+export default PostPreview
