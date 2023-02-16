@@ -1,3 +1,3 @@
-import PostPreview from "./PostPreview";
+import PostPreview from './PostPreview'
 
-export { PostPreview };
+export { PostPreview }
