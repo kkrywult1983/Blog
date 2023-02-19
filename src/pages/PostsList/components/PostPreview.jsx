@@ -1,9 +1,8 @@
 import { LikeOutlined } from '@ant-design/icons'
 import { Button, List, Typography } from 'antd'
+import { IconText } from 'components'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-
-import IconText from './IconText'
 
 const { Paragraph } = Typography
 
