@@ -1,8 +1,8 @@
 import { LikeOutlined } from '@ant-design/icons'
+import { Loading } from 'components'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Loading } from '../../components'
 import IconText from '../PostsList/components/IconText'
 
 const PostDetails = () => {

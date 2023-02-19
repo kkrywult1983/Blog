@@ -1,7 +1,7 @@
 import { List } from 'antd'
+import { Loading } from 'components'
 import { useEffect, useState } from 'react'
 
-import { Loading } from '../../components'
 import { PostPreview } from './components'
 
 const PostsList = () => {
