@@ -8,10 +8,9 @@ import IconText from '../PostsList/components/IconText'
 const PostDetails = () => {
   const { postId } = useParams()
   const [post, setPost] = useState()
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    setLoading(true)
     fetch(`http://localhost:3000/posts/${postId}`)
       .then((response) => response.json())
       .then((data) => {
@@ -23,10 +22,12 @@ const PostDetails = () => {
   return (
     <>
       {loading && <Loading />}
-      {!loading && <h1>{post && post.title}</h1>}
-      {!loading && <div>{post && post.body}</div>}
       {!loading && (
-        <IconText icon={LikeOutlined} text={post && post.likesCount} />
+        <>
+          <h1>{post.title}</h1>
+          <p>{post.body}</p>
+          <IconText icon={LikeOutlined} text={post.likesCount} />
+        </>
       )}
     </>
   )
