@@ -1,20 +1,27 @@
 import { LikeOutlined } from '@ant-design/icons'
 import { IconText, Loading } from 'components'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import postService from 'services/post'
 
 const PostDetails = () => {
+  const navigate = useNavigate()
   const { postId } = useParams()
   const [post, setPost] = useState()
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch(`http://localhost:3000/posts/${postId}`)
-      .then((response) => response.json())
+    postService
+      .fetchPost(postId)
       .then((data) => {
         setPost(data)
+        setLoading(false)
       })
-      .finally(() => setLoading(false))
+      .catch((err) => {
+        if (err.message === 'Not found') {
+          navigate('/not-found')
+        }
+      })
   }, [])
 
   return (

@@ -1,6 +1,8 @@
+/* eslint-disable no-console */
 import { List } from 'antd'
 import { Loading } from 'components'
 import { useEffect, useState } from 'react'
+import postService from 'services/post'
 
 import { PostPreview } from './components'
 
@@ -10,11 +12,12 @@ const PostsList = () => {
 
   useEffect(() => {
     setLoading(true)
-    fetch('http://localhost:3000/posts')
-      .then((response) => response.json())
+    postService
+      .fetchPosts()
       .then((data) => {
         setPosts(data)
       })
+      .catch((err) => console.log({ err }))
       .finally(() => setLoading(false))
   }, [])
 
