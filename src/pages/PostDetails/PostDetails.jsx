@@ -1,33 +1,26 @@
 import { LikeOutlined } from '@ant-design/icons'
 import { IconText, Loading } from 'components'
-import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { useParams } from 'react-router-dom'
 import postService from 'services/post'
 
 const PostDetails = () => {
-  const navigate = useNavigate()
   const { postId } = useParams()
-  const [post, setPost] = useState()
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    postService
-      .fetchPost(postId)
-      .then((data) => {
-        setPost(data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        if (err.message === 'Not found') {
-          navigate('/not-found')
-        }
-      })
-  }, [])
+  const {
+    isLoading,
+    data: post,
+    error,
+  } = useQuery('post', () => postService.fetchPost(postId))
+
+  if (error) {
+    return <h1>{error.message}</h1>
+  }
 
   return (
     <>
-      {loading && <Loading />}
-      {!loading && (
+      {isLoading && <Loading />}
+      {!isLoading && (
         <>
           <h1>{post.title}</h1>
           <p>{post.body}</p>
@@ -37,5 +30,4 @@ const PostDetails = () => {
     </>
   )
 }
-
 export default PostDetails
