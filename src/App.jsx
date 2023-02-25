@@ -1,11 +1,18 @@
-import { useState } from "react";
-import "./App.css";
-import PostsList from "./pages/PostsList.jsx";
+import { Navigate, Route, Routes } from 'react-router-dom'
 
-function App() {
-  const [count, setCount] = useState(0);
+import MainLayout from './components/MainLayout'
+import { PostsList } from './pages'
+import PostDetails from './pages/PostDetails'
 
-  return <PostsList />;
-}
-
-export default App;
+const App = () => (
+  <Routes>
+    <Route element={<MainLayout />}>
+      <Route path="posts">
+        <Route index element={<PostsList />} />
+        <Route path=":postId" element={<PostDetails />} />
+      </Route>
+    </Route>
+    <Route path="*" element={<Navigate to="posts" replace />} />
+  </Routes>
+)
+export default App
