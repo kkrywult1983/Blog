@@ -17,28 +17,28 @@ const postService = {
         return data
       }),
 
-  updatePosts: (postId, body) =>
+  updatePost: (postId, body) =>
     fetch(`${BASE_URL}/${postId}`, {
       method: 'PATCH',
       body: JSON.stringify(body),
-      headers: {
-        'Content=Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     }).then((response) => response.json()),
 
-  createPosts: (body) =>
+  createPost: (body) =>
     fetch(BASE_URL, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: {
-        'Content=Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
     }).then((response) => response.json()),
 
   deletePost: (postId) =>
-    fetch(`${BASE_URL}/${postId}`, { method: 'DELETE' }).then((response) =>
-      response.json()
-    ),
+    fetch(`${BASE_URL}/${postId}`, { method: 'DELETE' }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Something went wrong!')
+      }
+
+      return response.json()
+    }),
 }
 
 export default postService

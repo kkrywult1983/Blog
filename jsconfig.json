@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "jsx": "react-jsx",
-    "checkJs": false,
+    "checkJs": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "target": "es2020",
