@@ -22,7 +22,7 @@ const postService = {
       method: 'PATCH',
       body: JSON.stringify(body),
       headers: {
-        'Contetn=Type': 'application/json',
+        'Content=Type': 'application/json',
       },
     }).then((response) => response.json()),
 
@@ -31,12 +31,14 @@ const postService = {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
-        'Contetn=Type': 'application/json',
+        'Content=Type': 'application/json',
       },
     }).then((response) => response.json()),
 
   deletePost: (postId) =>
-    fetch(`${BASE_URL}/${postId}`).then((response) => response.json()),
+    fetch(`${BASE_URL}/${postId}`, { method: 'DELETE' }).then((response) =>
+      response.json()
+    ),
 }
 
 export default postService
