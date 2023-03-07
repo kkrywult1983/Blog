@@ -22,7 +22,7 @@ const postService = {
       method: 'PATCH',
       body: JSON.stringify(body),
       headers: {
-        'Content=Type': 'application/json',
+        'Content-Type': 'application/json',
       },
     }).then((response) => response.json()),
 
@@ -31,7 +31,7 @@ const postService = {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
-        'Content=Type': 'application/json',
+        'Content-Type': 'application/json',
       },
     }).then((response) => response.json()),
 
