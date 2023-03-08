@@ -26,7 +26,7 @@ const postService = {
       },
     }).then((response) => response.json()),
 
-  createPosts: (body) =>
+  createPost: (body) =>
     fetch(BASE_URL, {
       method: 'POST',
       body: JSON.stringify(body),
