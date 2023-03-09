@@ -17,7 +17,7 @@ const postService = {
         return data
       }),
 
-  updatePosts: (postId, body) =>
+  updatePost: (postId, body) =>
     fetch(`${BASE_URL}/${postId}`, {
       method: 'PATCH',
       body: JSON.stringify(body),
