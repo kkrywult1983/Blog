@@ -1,3 +1,4 @@
+import NotFound from 'pages/NotFound/NotFound'
 import { Navigate, Route, Routes } from 'react-router-dom'
 
 import MainLayout from './components/MainLayout'
@@ -12,6 +13,7 @@ const App = () => (
         <Route path=":postId" element={<PostDetails />} />
       </Route>
     </Route>
+    <Route path="not-found" element={<NotFound />} />
     <Route path="*" element={<Navigate to="posts" replace />} />
   </Routes>
 )
