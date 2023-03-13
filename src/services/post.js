@@ -28,16 +28,22 @@ const postService = {
     fetch(BASE_URL, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: { 'Content-Type': 'application/json' },
-    }).then((response) => response.json()),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Your post has been not add')
+      }
+      return true
+    }),
 
   deletePost: (postId) =>
     fetch(`${BASE_URL}/${postId}`, { method: 'DELETE' }).then((response) => {
       if (!response.ok) {
-        throw new Error('Something went wrong!')
+        throw new Error('something happend wrong')
       }
-
-      return response.json()
+      return true
     }),
 }
 

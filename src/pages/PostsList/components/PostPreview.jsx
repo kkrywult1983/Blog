@@ -20,6 +20,10 @@ const ExtraContentWrapper = styled.div`
   height: 100%;
 `
 
+const ExtraButtonWrapper = styled.div`
+  padding-right: 10px;
+`
+
 const PostPreview = ({ post }) => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -66,17 +70,27 @@ const PostPreview = ({ post }) => {
       ]}
       extra={
         <ExtraContentWrapper>
-          <Button type="primary" onClick={() => handleNavigate(post.id)}>
-            Read more
-          </Button>
-          <Button
-            danger
-            icon={<DeleteOutlined />}
-            loading={isLoading}
-            onClick={confirm}
-          >
-            Delete post
-          </Button>
+          <ExtraButtonWrapper>
+            <Button type="primary" onClick={() => handleNavigate(post.id)}>
+              Read more
+            </Button>
+          </ExtraButtonWrapper>
+          <ExtraButtonWrapper>
+            <Button type="primary" onClick={() => handleNavigate(post.id)}>
+              Edit post{' '}
+            </Button>
+          </ExtraButtonWrapper>
+          <ExtraButtonWrapper>
+            <Button
+              type="primary"
+              danger
+              icon={<DeleteOutlined />}
+              loading={isLoading}
+              onClick={confirm}
+            >
+              Delete post
+            </Button>
+          </ExtraButtonWrapper>
         </ExtraContentWrapper>
       }
     >
