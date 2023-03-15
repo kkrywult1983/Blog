@@ -4,7 +4,7 @@ import { showSuccessNotification } from 'helpers/showSuccessNotification'
 import { useMutation, useQueryClient } from 'react-query'
 import postService from 'services/post'
 
-const PostForm = ({ form, onCancel }) => {
+const PostForm = ({ form, onCancel, props }) => {
   const queryClient = useQueryClient()
 
   const handleFormSubmit = (values) => {
@@ -26,8 +26,12 @@ const PostForm = ({ form, onCancel }) => {
     }
   )
 
-  const validateMessage = {
-    required: 'Title is required',
+  let title = ''
+  let body = ''
+
+  if (props.props) {
+    title = props.props.title
+    body = props.props.body
   }
 
   const { TextArea } = Input
@@ -38,13 +42,12 @@ const PostForm = ({ form, onCancel }) => {
       onFinish={handleFormSubmit}
       layout="vertical"
       form={form}
-      validateMessages={validateMessage}
     >
       <Form.Item name="title" label="Title">
-        <Input required />
+        <Input defaultValue={title} />
       </Form.Item>
       <Form.Item name="body" label="Post Content">
-        <TextArea autoSize={{ minRows: 3, maxRows: 6 }} required />
+        <TextArea autoSize={{ minRows: 3, maxRows: 6 }} defaultValue={body} />
       </Form.Item>
     </Form>
   )

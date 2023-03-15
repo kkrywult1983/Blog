@@ -11,11 +11,18 @@ const ExtraContentWrapper = styled.div`
   height: 100%;
 `
 
-const CreatePostModal = () => {
+const CreatePostModal = (props, title) => {
   const [open, setOpen] = useState(false)
   const [form] = useForm()
-
   const toggleModalVisibility = () => setOpen((prev) => !prev)
+
+  let buttonDescription = ''
+
+  if (props.title) {
+    buttonDescription = props.title
+  } else {
+    buttonDescription = 'New post'
+  }
 
   return (
     <>
@@ -25,7 +32,7 @@ const CreatePostModal = () => {
           icon={<PlusOutlined />}
           onClick={toggleModalVisibility}
         >
-          Add Post
+          {buttonDescription}
         </Button>
       </ExtraContentWrapper>
       <Modal
@@ -34,7 +41,7 @@ const CreatePostModal = () => {
         title="Create post"
         onOk={form.submit}
       >
-        <PostForm form={form} onCancel={toggleModalVisibility} />
+        <PostForm form={form} onCancel={toggleModalVisibility} props={props} />
       </Modal>
     </>
   )

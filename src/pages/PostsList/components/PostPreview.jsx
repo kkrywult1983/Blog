@@ -76,11 +76,6 @@ const PostPreview = ({ post }) => {
             </Button>
           </ExtraButtonWrapper>
           <ExtraButtonWrapper>
-            <Button type="primary" onClick={() => handleNavigate(post.id)}>
-              Edit post{' '}
-            </Button>
-          </ExtraButtonWrapper>
-          <ExtraButtonWrapper>
             <Button
               type="primary"
               danger

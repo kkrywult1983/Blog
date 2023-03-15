@@ -13,14 +13,13 @@ const postService = {
     }),
 
   fetchPost: (postId) =>
-    fetch(`${BASE_URL}/${postId}`)
-      .then((response) => response.json())
-      .then((data) => {
-        if (isEmpty(data)) {
-          throw new Error('Not found')
-        }
-        return data
-      }),
+    fetch(`${BASE_URL}/${postId}`).then((response) => {
+      if (!response.ok) {
+        throw new Error('Not found')
+      }
+
+      return response.json()
+    }),
 
   updatePost: (postId, body) =>
     fetch(`${BASE_URL}/${postId}`, {

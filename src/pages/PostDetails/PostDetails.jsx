@@ -1,10 +1,12 @@
-import { DislikeOutlined, LikeOutlined } from '@ant-design/icons'
-import { Button } from 'antd'
-import { IconText, Loading } from 'components'
+import { DislikeOutlined, EditOutlined, LikeOutlined } from '@ant-design/icons'
+import { Button, Card, Col, Row, Skeleton, Space } from 'antd'
 import { showSuccessNotification } from 'helpers/showSuccessNotification'
+import CreatePostModal from 'pages/PostsList/components/CreatePostModal'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 import postService from 'services/post'
+
+const { Meta } = Card
 
 const PostDetails = () => {
   const { postId } = useParams()
@@ -13,15 +15,15 @@ const PostDetails = () => {
   const queryClient = useQueryClient()
 
   const { isLoading: isLoadingAfterUpdate, mutate } = useMutation(
-    (data) => postService.updatePost(postId, data),
+    (data) => {
+      return postService.updatePost(postId, data)
+    },
     {
       onSuccess: () => {
-        showSuccessNotification('Post updated')
+        showSuccessNotification('Likes updated')
         queryClient.invalidateQueries(['post', postId])
       },
-      onError: () => {
-        console.log('Error')
-      },
+      onError: () => showErrorNotification('Problem with likes update'),
     }
   )
 
@@ -50,33 +52,36 @@ const PostDetails = () => {
   }
 
   return (
-    <>
-      {isLoading && <Loading />}
-      {!isLoading && (
-        <>
-          <h1>{post.title}</h1>
-          <p>{post.body}</p>
-          <Button
-            type="link"
-            key="likecCount"
-            onClick={() => handleLike(post)}
-            disabled={isLoading || isLoadingAfterUpdate}
-          >
-            <IconText icon={LikeOutlined} text={undefined} />
-          </Button>
-          <>
-            <p>{post.likesCount} </p>
-            <Button
-              type="primary"
-              onClick={() => handleDislike(post)}
-              disabled={isLoading || isLoadingAfterUpdate}
-            >
-              <IconText icon={DislikeOutlined} text={undefined} />
-            </Button>
-          </>
-        </>
-      )}
-    </>
+    <Row justify="center">
+      <Col md={20}>
+        <Card
+          actions={[
+            <Space key="LikeButton">
+              <Button
+                type="link"
+                key="likesCount"
+                icon={<LikeOutlined />}
+                disabled={isLoading || isLoadingAfterUpdate}
+                onClick={() => handleLike(post)}
+              />
+              {post?.likesCount}
+              <Button
+                type="link"
+                key="dislikesCount"
+                icon={<DislikeOutlined />}
+                disabled={isLoading || isLoadingAfterUpdate}
+                onClick={handleDislike}
+              />
+              <CreatePostModal props={post} title="Edit post" key={post?.id} />
+            </Space>,
+          ]}
+        >
+          <Skeleton loading={isLoading} active title paragraph={{ rows: 10 }}>
+            <Meta title={post?.title} description={post?.body} />
+          </Skeleton>
+        </Card>
+      </Col>
+    </Row>
   )
 }
 export default PostDetails
