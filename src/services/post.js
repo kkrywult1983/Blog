@@ -5,7 +5,10 @@ const postService = {
   fetchPaginatedPosts: (page = 1, limit = 10) =>
     fetch(`${BASE_URL}?_page=${page}&_limit=${limit}`).then((response) => {
       const totalCount = response.headers.get('x-total-count')
-      // eslint-disable-next-line padding-line-between-statements
+      if (!response.ok) {
+        throw new Error('Not found')
+      }
+
       return {
         response: response.json(),
         totalCount,
@@ -26,7 +29,13 @@ const postService = {
       method: 'PATCH',
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' },
-    }).then((response) => response.json()),
+    }).then((response) => {
+      if (!response.ok) {
+        throw new Error('Not found')
+      }
+
+      return response.json()
+    }),
 
   createPost: (body) =>
     fetch(BASE_URL, {
@@ -39,6 +48,7 @@ const postService = {
       if (!response.ok) {
         throw new Error('Your post has been not add')
       }
+
       return true
     }),
 
@@ -47,6 +57,7 @@ const postService = {
       if (!response.ok) {
         throw new Error('something happend wrong')
       }
+
       return true
     }),
 }

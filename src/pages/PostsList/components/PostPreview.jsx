@@ -6,7 +6,6 @@ import {
 import { Button, List, Modal, Typography } from 'antd'
 import { IconText } from 'components'
 import { showErrorNotification, showSuccessNotification } from 'helpers'
-import { useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import postService from 'services/post'
@@ -27,8 +26,6 @@ const ExtraButtonWrapper = styled.div`
 const PostPreview = ({ post }) => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const [isConfirmationModal, setIsConfirmationModal] = useState(false)
-
   const handleNavigate = (postId) => navigate(`/posts/${postId}`)
 
   const { isLoading, mutate } = useMutation(
@@ -43,6 +40,9 @@ const PostPreview = ({ post }) => {
       },
     }
   )
+  const handleOk = () => {
+    mutate()
+  }
 
   const confirm = () => {
     Modal.confirm({
@@ -52,10 +52,6 @@ const PostPreview = ({ post }) => {
       onOk: handleOk,
       confirmLoading: isLoading,
     })
-  }
-
-  const handleOk = () => {
-    mutate()
   }
 
   return (
