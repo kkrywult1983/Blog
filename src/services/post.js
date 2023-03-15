@@ -1,10 +1,16 @@
-/* eslint-disable no-console */
-import { isEmpty } from 'lodash'
-
 const BASE_URL = 'http://localhost:3000/posts'
 
 const postService = {
   fetchPosts: () => fetch(BASE_URL).then((response) => response.json()),
+  fetchPaginatedPosts: (page = 1, limit = 10) =>
+    fetch(`${BASE_URL}?_page=${page}&_limit=${limit}`).then((response) => {
+      const totalCount = response.headers.get('x-total-count')
+      // eslint-disable-next-line padding-line-between-statements
+      return {
+        response: response.json(),
+        totalCount,
+      }
+    }),
 
   fetchPost: (postId) =>
     fetch(`${BASE_URL}/${postId}`)
@@ -13,7 +19,6 @@ const postService = {
         if (isEmpty(data)) {
           throw new Error('Not found')
         }
-
         return data
       }),
 

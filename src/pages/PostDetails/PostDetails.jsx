@@ -1,12 +1,39 @@
-import { LikeOutlined } from '@ant-design/icons'
+import { DislikeOutlined, LikeOutlined } from '@ant-design/icons'
+import { Button } from 'antd'
 import { IconText, Loading } from 'components'
-import { useQuery } from 'react-query'
+import { showSuccessNotification } from 'helpers/showSuccessNotification'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 import postService from 'services/post'
 
 const PostDetails = () => {
   const { postId } = useParams()
   const navigate = useNavigate()
+
+  const queryClient = useQueryClient()
+
+  const { isLoading: isLoadingAfterUpdate, mutate } = useMutation(
+    (data) => postService.updatePost(postId, data),
+    {
+      onSuccess: () => {
+        showSuccessNotification('Post updated')
+        queryClient.invalidateQueries(['post', postId])
+      },
+      onError: () => {
+        console.log('Error')
+      },
+    }
+  )
+
+  const handleLike = (post) => {
+    const updatePost = { ...post, likesCount: post.likesCount + 5 }
+    mutate(updatePost)
+  }
+
+  const handleDislike = () => {
+    const updatePost = { ...post, likesCount: post.likesCount - 10 }
+    mutate(updatePost)
+  }
 
   const {
     isLoading,
@@ -29,7 +56,24 @@ const PostDetails = () => {
         <>
           <h1>{post.title}</h1>
           <p>{post.body}</p>
-          <IconText icon={LikeOutlined} text={post.likesCount} />
+          <Button
+            type="link"
+            key="likecCount"
+            onClick={() => handleLike(post)}
+            disabled={isLoading || isLoadingAfterUpdate}
+          >
+            <IconText icon={LikeOutlined} text={undefined} />
+          </Button>
+          <>
+            <p>{post.likesCount} </p>
+            <Button
+              type="primary"
+              onClick={() => handleDislike(post)}
+              disabled={isLoading || isLoadingAfterUpdate}
+            >
+              <IconText icon={DislikeOutlined} text={undefined} />
+            </Button>
+          </>
         </>
       )}
     </>
