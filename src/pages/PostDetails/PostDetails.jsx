@@ -1,16 +1,17 @@
-import { DislikeOutlined, EditOutlined, LikeOutlined } from '@ant-design/icons'
-import { Button, Card, Col, Row, Skeleton, Space } from 'antd'
+// @ts-nocheck
+import { Col, Row, Card, Skeleton } from 'antd'
 import { showSuccessNotification } from 'helpers/showSuccessNotification'
-import CreatePostModal from 'pages/PostsList/components/CreatePostModal'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 import postService from 'services/post'
-
-const { Meta } = Card
+import { LikesComponent } from 'components'
+import CreatePostModal from 'pages/PostsList/components/CreatePostModal'
 
 const PostDetails = () => {
   const { postId } = useParams()
   const navigate = useNavigate()
+
+  const { Meta } = Card
 
   const queryClient = useQueryClient()
 
@@ -26,16 +27,6 @@ const PostDetails = () => {
       onError: () => showErrorNotification('Problem with likes update'),
     }
   )
-
-  const handleLike = (post) => {
-    const updatePost = { ...post, likesCount: post.likesCount + 5 }
-    mutate(updatePost)
-  }
-
-  const handleDislike = () => {
-    const updatePost = { ...post, likesCount: post.likesCount - 10 }
-    mutate(updatePost)
-  }
 
   const {
     isLoading,
@@ -56,24 +47,13 @@ const PostDetails = () => {
       <Col md={20}>
         <Card
           actions={[
-            <Space key="LikeButton">
-              <Button
-                type="link"
-                key="likesCount"
-                icon={<LikeOutlined />}
-                disabled={isLoading || isLoadingAfterUpdate}
-                onClick={() => handleLike(post)}
-              />
-              {post?.likesCount}
-              <Button
-                type="link"
-                key="dislikesCount"
-                icon={<DislikeOutlined />}
-                disabled={isLoading || isLoadingAfterUpdate}
-                onClick={handleDislike}
-              />
-              <CreatePostModal props={post} title="Edit post" key={post?.id} />
-            </Space>,
+            <LikesComponent
+              isLoadingAfterUpdate={isLoadingAfterUpdate}
+              isLoading={isLoading}
+              post={post}
+              mutate={mutate}
+            />,
+            <CreatePostModal props={post} title="Edit post" key={post?.id} />,
           ]}
         >
           <Skeleton loading={isLoading} active title paragraph={{ rows: 10 }}>

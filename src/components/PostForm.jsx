@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Form, Input } from 'antd'
 import { showErrorNotification } from 'helpers/showErrorNotification'
 import { showSuccessNotification } from 'helpers/showSuccessNotification'
@@ -8,13 +9,14 @@ const PostForm = ({ form, onCancel, props }) => {
   const queryClient = useQueryClient()
 
   const handleFormSubmit = (values) => {
+    console.log(values)
     mutate(values)
     onCancel()
   }
 
   const { mutate } = useMutation(
     (variables) => {
-      postService.createPost(variables)
+      postService.createPost(variables, (variables.likesCount = 0))
     },
 
     {

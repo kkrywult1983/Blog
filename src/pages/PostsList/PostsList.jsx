@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Col, List, Row, Typography } from 'antd'
 import { Loading } from 'components'
 import { useState } from 'react'

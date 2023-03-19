@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   DeleteOutlined,
   ExclamationCircleOutlined,
@@ -10,6 +11,7 @@ import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import postService from 'services/post'
 import styled from 'styled-components'
+import LikesComponent from 'components/LikesComponent'
 
 const { Paragraph } = Typography
 
@@ -50,6 +52,7 @@ const PostPreview = ({ post }) => {
       icon: <ExclamationCircleOutlined />,
       content: 'Are you sure you want to delete post',
       onOk: handleOk,
+      // @ts-ignore
       confirmLoading: isLoading,
     })
   }
@@ -63,6 +66,7 @@ const PostPreview = ({ post }) => {
           text={post.likesCount}
           key="list-vertical-like-o"
         />,
+        <LikesComponent />,
       ]}
       extra={
         <ExtraContentWrapper>
