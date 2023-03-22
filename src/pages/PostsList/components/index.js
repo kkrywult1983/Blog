@@ -1,3 +1,3 @@
 import PostPreview from './PostPreview'
-
-export { PostPreview }
+import { Likes } from './Likes'
+export { PostPreview, Likes }

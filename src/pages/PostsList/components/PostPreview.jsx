@@ -11,7 +11,7 @@ import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
 import postService from 'services/post'
 import styled from 'styled-components'
-import LikesComponent from 'components/LikesComponent'
+import { Likes } from './Likes'
 
 const { Paragraph } = Typography
 
@@ -59,14 +59,14 @@ const PostPreview = ({ post }) => {
 
   return (
     <List.Item
-      key={post.title}
+      // key={post.title}
       actions={[
-        <IconText
-          icon={LikeOutlined}
-          text={post.likesCount}
-          key="list-vertical-like-o"
-        />,
-        <LikesComponent />,
+        //   <IconText
+        //     icon={LikeOutlined}
+        //     text={post.likesCount}
+        //     key="list-vertical-like-o"
+        //   />,
+        <Likes postId={post.id} />,
       ]}
       extra={
         <ExtraContentWrapper>
