@@ -1,6 +1,5 @@
 import { DislikeOutlined, LikeOutlined } from '@ant-design/icons'
-import { Button, Space, List } from 'antd'
-import { IconText } from 'components'
+import { Button, Space } from 'antd'
 import { showSuccessNotification, showErrorNotification } from 'helpers'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { useParams } from 'react-router-dom'
@@ -37,8 +36,12 @@ export const Likes = (props) => {
   }
 
   const handleDislike = () => {
-    const updatePost = { ...post, likesCount: post.likesCount - 10 }
-    mutate(updatePost)
+    if (post.likesCount < 10) {
+      return console.log('To less posts')
+    } else {
+      const updatePost = { ...post, likesCount: post.likesCount - 10 }
+      mutate(updatePost)
+    }
   }
 
   return (

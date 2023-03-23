@@ -7,6 +7,7 @@ import { Likes } from 'pages/PostsList/components/Likes'
 import { useQuery } from 'react-query'
 import { useNavigate, useParams } from 'react-router-dom'
 import postService from 'services/post'
+import { EditPostModal } from './components'
 
 const { Meta } = Card
 
@@ -33,7 +34,17 @@ const PostDetails = () => {
   return (
     <Row justify="center">
       <Col md={20}>
-        <Card actions={[<Likes />, <CreatePostModal title="Edit post" />]}>
+        <Card
+          actions={[
+            <Likes />,
+            <EditPostModal
+              key="edit"
+              disabled={isLoading}
+              initialValues={post}
+            />,
+            <CreatePostModal title="Edit post" />,
+          ]}
+        >
           <Skeleton loading={isLoading} active title paragraph={{ rows: 10 }}>
             <Meta title={post?.title} description={post?.body} />
           </Skeleton>

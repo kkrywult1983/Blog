@@ -5,7 +5,6 @@ import {
   LikeOutlined,
 } from '@ant-design/icons'
 import { Button, List, Modal, Typography } from 'antd'
-import { IconText } from 'components'
 import { showErrorNotification, showSuccessNotification } from 'helpers'
 import { useMutation, useQueryClient } from 'react-query'
 import { useNavigate } from 'react-router-dom'
